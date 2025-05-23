@@ -1,0 +1,47 @@
+digraph G {
+    rankdir=LR;
+    node [shape=box];
+    edge [arrowhead=normal];
+
+    Start [shape=circle]
+    Start -> A
+
+    subgraph cluster_NormalView {
+        label="Normal View"
+        A [label="Normal Mode"]
+        B [label="Visual Mode"]
+    }
+
+    A -> B [label="v, V"]
+    B -> A [label="<vis-exit>"]
+
+    subgraph cluster_OutlineView {
+        label="Outline View"
+        C [label="Normal Mode"]
+        D [label="Visual Mode"]
+    }
+
+    A -> C [label="<tab>"]
+    C -> A [label="<tab>"]
+
+    subgraph cluster_SettingsView {
+        label="Settings View"
+        E [label="Normal Mode"]
+    }
+
+    A -> E [label=":settings"]
+    E -> A [label="q"]
+    C -> E [label=":settings"]
+    E -> C [label="q"]
+
+    subgraph cluster_CellEditView {
+        label="Cell Edit View"
+        F [label="Normal Mode"]
+        G [label="Visual Mode"]
+        H [label="In-Cell Search Mode"]
+        I [label="Block Visual Mode"]
+    }
+
+    A -> F [label="<cr> on cell"]
+    F -> A [label="q"]
+}

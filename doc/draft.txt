@@ -1,0 +1,17 @@
+# Editor Mode
+
+- Normal Mode
+
+  Navigate on cell-level, edit command on cell-level.
+
+- Insert Mode
+
+# the layout
+
+## Outline mode
+
+```
+              | B (90%, 70%)
+A (10%, 100%) |-------------
+              | C (90%, 30%)
+```
