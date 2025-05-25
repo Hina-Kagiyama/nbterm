@@ -797,6 +797,7 @@ dependencies = [
  "crossterm 0.29.0",
  "lsp-types 0.97.0",
  "ratatui",
+ "regex",
  "serde",
  "serde_json",
  "tower-lsp",
