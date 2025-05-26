@@ -1,4 +1,6 @@
-use ratatui::widgets::{Paragraph, Widget};
+use ratatui::widgets::{Block, Widget};
+
+use crate::tui::title_padding;
 
 #[derive(Default)]
 pub struct FilePicker {
@@ -8,10 +10,19 @@ pub struct FilePicker {
 
 impl Widget for &FilePicker {
     fn render(self, area: ratatui::prelude::Rect, buf: &mut ratatui::prelude::Buffer) {
+        const TITLE: &str = "File Picker";
         // TODO: Implement the rendering logic for the file picker
         // placeholder implementation: just a plain block with right border
-        Paragraph::new("File Picker")
-            .block(ratatui::widgets::Block::default().borders(ratatui::widgets::Borders::RIGHT))
-            .render(area, buf);
+        let file_picker_widget = Block::default()
+            .title(title_padding(area, TITLE))
+            .borders(ratatui::widgets::Borders::RIGHT)
+            .title_style(
+                ratatui::style::Style::default()
+                    .fg(ratatui::style::Color::Black)
+                    .bg(ratatui::style::Color::DarkGray)
+                    .add_modifier(ratatui::style::Modifier::BOLD),
+            );
+
+        file_picker_widget.render(area, buf);
     }
 }

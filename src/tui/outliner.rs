@@ -15,5 +15,9 @@ pub struct OutlineItem {
 impl Widget for &Outliner {
     fn render(self, area: ratatui::prelude::Rect, buf: &mut ratatui::prelude::Buffer) {
         // TODO: Implement the rendering logic for the outliner
+        // placeholder implementation: just a plain block with left border
+        ratatui::widgets::Paragraph::new("Outliner")
+            .block(ratatui::widgets::Block::default().borders(ratatui::widgets::Borders::LEFT))
+            .render(area, buf);
     }
 }

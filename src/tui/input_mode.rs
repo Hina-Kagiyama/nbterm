@@ -10,6 +10,9 @@ pub enum InputMode {
     VisualLine,
     VisualBlock,
     Replace,
+
+    // not part of the input mode, but used for navigation in the UI
+    UICursor,
 }
 
 impl Display for InputMode {
@@ -22,6 +25,7 @@ impl Display for InputMode {
             InputMode::VisualLine => write!(f, "[ViL]"),
             InputMode::VisualBlock => write!(f, "[ViB]"),
             InputMode::Replace => write!(f, "[Rep]"),
+            InputMode::UICursor => write!(f, "[Cur]"),
         }
     }
 }
