@@ -18,16 +18,17 @@ use ratatui::{
 use std::io;
 
 pub struct NotebookApp {
-    left_pane_mode: Option<LeftPaneMode>,
-    right_pane_mode: Option<RightPaneMode>,
-    file_path: Option<String>,
-    file_picker: FilePicker,
-    outliner: Outliner,
-    variables: VariablesViewer,
-    settings: Settings,
-    tabs: Vec<EditorTab>,
-    tab_selected: usize,
-    input_mode: InputMode,
+    pub(crate) left_pane_mode: Option<LeftPaneMode>,
+    pub(crate) right_pane_mode: Option<RightPaneMode>,
+    pub(crate) file_path: Option<String>,
+    pub(crate) file_picker: FilePicker,
+    pub(crate) outliner: Outliner,
+    pub(crate) variables: VariablesViewer,
+    pub(crate) settings: Settings,
+    pub(crate) tabs: Vec<EditorTab>,
+    pub(crate) tab_selected: usize,
+    pub(crate) input_mode: InputMode,
+    pub(crate) leaving: bool,
 }
 
 impl Default for NotebookApp {
@@ -43,6 +44,7 @@ impl Default for NotebookApp {
             tabs: vec![EditorTab::default()],
             tab_selected: 0,
             input_mode: InputMode::default(),
+            leaving: false,
         }
     }
 }
@@ -83,11 +85,16 @@ impl NotebookApp {
         res
     }
 
+    fn cleanup(&mut self) -> io::Result<()> {
+        // TODO: Implement any necessary cleanup logic here
+        Ok(())
+    }
+
     fn ui_loop<B: ratatui::backend::Backend>(
         &mut self,
         terminal: &mut Terminal<B>,
     ) -> io::Result<()> {
-        loop {
+        while !self.leaving {
             terminal.draw(|f| {
                 let area = f.area();
 
@@ -239,6 +246,7 @@ impl NotebookApp {
                     }
                 }
             }
-        }
+        }?;
+        self.cleanup()
     }
 }

@@ -1,7 +1,9 @@
 use regex::Regex;
-use std::path::PathBuf;
+use std::{path::PathBuf, slice::Iter};
 
-#[derive(Debug)]
+use super::NotebookApp;
+
+#[derive(Debug, Clone)]
 pub enum EditorCommand {
     // Editor actions
     Quit,
@@ -37,6 +39,7 @@ pub enum EditorCommand {
     Redo,
     Navigate(NavigationCommand),
     Repeat(Box<EditorCommand>, usize),
+    Input(String), // input text directly, then move cursor to the end of the input.
 
     // Pane Navigation actions
     ToLeftPane,
@@ -57,6 +60,7 @@ pub enum EditorCommand {
     DeleteText,
     DeleteLine,
     DeleteWord,
+    DeletePreviousWord,
     DeleteToEndOfLine,
     DeleteToStartOfLine,
     DeleteToEndOfFile,
@@ -81,7 +85,7 @@ pub enum EditorCommand {
 }
 
 // Some editor commands take a navigation command as an argument
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum NavigationCommand {
     Up,
     Down,
@@ -105,4 +109,16 @@ pub enum NavigationCommand {
     ToPreviousOutlineItemStart,
     ToPreviousOutlineItemEnd,
     ToNextBookmark,
+}
+
+impl NotebookApp {
+    pub fn execute_command(&mut self, command: EditorCommand) {
+        match command {
+            EditorCommand::Quit => {
+                self.leaving = true;
+            }
+            // Handle other commands...
+            _ => {}
+        }
+    }
 }
